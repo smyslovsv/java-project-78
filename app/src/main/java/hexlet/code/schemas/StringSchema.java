@@ -2,27 +2,33 @@ package hexlet.code.schemas;
 
 
 public class StringSchema {
-    private static boolean requiredStatus = false;
-    private static boolean lengthStatus = false;
-    private static boolean containsStatus = false;
-    private static int minLengthValue = 0;
-    private static String containsString = "";
+    private static boolean requiredStatus;
+    private static boolean lengthStatus;
+    private static boolean containsStatus;
+    private static int minLengthValue;
+    private static String containsString;
 
     public StringSchema() {
+        containsStatus = false;
+        requiredStatus = false;
+        lengthStatus = false;
     }
 
-    public void required() {
+    public StringSchema required() {
         requiredStatus = true;
+        return this;
     }
 
-    public void minLength(int length) {
-        requiredStatus = true;
+    public StringSchema minLength(int length) {
+        lengthStatus = true;
         minLengthValue = length;
+        return this;
     }
 
-    public void contains(String str) {
+    public StringSchema contains(String str) {
         containsStatus = true;
         containsString = str;
+        return this;
     }
 
     public boolean isValid(String checkedValue) {
@@ -31,6 +37,8 @@ public class StringSchema {
 
     private boolean containsCurString(String checkedValue) {
         if (containsStatus) {
+            if (checkedValue == null)
+                return false;
             return checkedValue.contains(containsString);
         }
         return true;
