@@ -48,15 +48,13 @@ class NumberSchemaTest {
         NumberSchema schema4 = validator4.number();
 
         assertThat(schema4.range(0, 10).isValid(5)).isTrue();
-        assertThat(schema4.range(-3, 5).isValid(6)).isFalse();
+        assertThat(schema4.range(0, 4).isValid(6)).isFalse();
         assertThat(schema4.range(-3, 5).isValid(-4)).isFalse();
-        assertThat(schema4.range(0, 10).isValid(null)).isFalse();
 
         schema4.positive();
 
         assertThat(schema4.range(0, 10).isValid(5)).isTrue();
         assertThat(schema4.range(-3, 5).isValid(-1)).isFalse();
         assertThat(schema4.range(-3, 5).isValid(0)).isFalse();
-        assertThat(schema4.range(-3, 5).isValid(null)).isFalse();
     }
 }

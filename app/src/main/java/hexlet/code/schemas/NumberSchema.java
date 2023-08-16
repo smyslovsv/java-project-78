@@ -1,64 +1,30 @@
 package hexlet.code.schemas;
 
-public class NumberSchema {
-    private static boolean positiveStatus;
-    private static boolean rangeStatus;
-    private static boolean requiredStatus;
+public class NumberSchema extends BaseSchema{
+    private static final String DATA_TYPE = "dataType";
+    private static final String REQUIRED = "required";
+    private static final String POSITIVE = "positive";
+    private static final String RANGE = "range";
     private static int minValue;
     private static int maxValue;
 
     public NumberSchema() {
-        positiveStatus = false;
-        requiredStatus = false;
-        rangeStatus = false;
+        addCheck(DATA_TYPE, value -> (value instanceof Integer) || (value == null));
     }
 
     public NumberSchema required() {
-        requiredStatus = true;
-        return this;
-    }
-
-    public NumberSchema range(int start, int end) {
-        rangeStatus = true;
-        minValue = start;
-        maxValue = end;
+        addCheck(REQUIRED, value -> value instanceof Integer);
         return this;
     }
 
     public NumberSchema positive() {
-        positiveStatus = true;
+        addCheck(POSITIVE, value -> (value == null) || ((int) value > 0));
         return this;
     }
-
-    public boolean isValid(Integer checkedValue) {
-        return isRequired(checkedValue) && isCorrectRange(checkedValue) && isPositive(checkedValue);
+    public NumberSchema range(Integer min, Integer max) {
+        minValue = min;
+        maxValue = max;
+        addCheck(RANGE, value -> (value == null) || ((int) value >= minValue && (int) value <= maxValue));
+        return this;
     }
-
-    private boolean isPositive(Integer checkedValue) {
-        if (positiveStatus) {
-            if (checkedValue == null)
-                return true;
-            return checkedValue > 0;
-        }
-        return true;
-    }
-
-    private boolean isCorrectRange(Integer checkedValue) {
-        if (rangeStatus) {
-            if (checkedValue == null)
-                return false;
-
-            return checkedValue >= minValue && checkedValue <= maxValue;
-        }
-        return true;
-    }
-
-    private boolean isRequired(Integer checkedValue) {
-        if (requiredStatus) {
-            if (checkedValue == null)
-                return false;
-        }
-        return true;
-    }
-
 }
