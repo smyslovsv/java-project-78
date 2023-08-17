@@ -30,7 +30,7 @@ class MapSchemaTest {
         MapSchema schema2 = validator2.map().required();
 
         assertThat(schema2.isValid(null)).isFalse();
-        assertThat(schema2.isValid(new HashMap())).isTrue();
+        assertThat(schema2.isValid(new HashMap<>())).isTrue();
     }
 
     @Test
