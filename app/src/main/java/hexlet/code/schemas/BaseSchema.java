@@ -1,6 +1,7 @@
 package hexlet.code.schemas;
 
-import java.util.*;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.function.Predicate;
 
 public class BaseSchema {
@@ -11,19 +12,19 @@ public class BaseSchema {
     }
 
     public final boolean isValid(Object value) {
-        Set<String> set = checks.keySet();
-        List<String> list = new ArrayList<>(set);
-        for (String s : list) {
-            System.out.println("Checked " + s
-                    + " -> " + checks.get(s).test(value));
-            if (!checks.get(s).test(value)) {
-                return false;
-            }
-        }
-//        for (Predicate<Object> check : checks.values()) {
-//            if (!check.test(value))
+//        Set<?> set = checks.keySet();
+//        List<String> list = (List<String>) new ArrayList<>(set);
+//        for (String s : list) {
+//            System.out.println("Checked " + s
+//                    + " -> " + checks.get(s).test(value));
+//            if (!checks.get(s).test(value)) {
 //                return false;
+//            }
 //        }
+        for (Predicate<Object> check : checks.values()) {
+            if (!check.test(value))
+                return false;
+        }
         return true;
     }
 

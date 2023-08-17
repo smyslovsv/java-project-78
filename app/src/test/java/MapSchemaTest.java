@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MapSchemaTest {
     @Test
-    public void MapSchema() {
+    public void testMapSchemaDefault() {
         Validator validator1 = new Validator();
         MapSchema schema1 = validator1.map();
 
@@ -25,7 +25,7 @@ class MapSchemaTest {
         assertThat(schema1.isValid(data2)).isTrue();
     }
     @Test
-    public void MapSchemaRequired() {
+    public void testMapSchemaRequired() {
         Validator validator2 = new Validator();
         MapSchema schema2 = validator2.map().required();
 
@@ -34,7 +34,7 @@ class MapSchemaTest {
     }
 
     @Test
-    public void MapSchemaSizeOf() {
+    public void testMapSchemaSizeOf() {
         Validator validator3 = new Validator();
         MapSchema schema3 = validator3.map();
         schema3.sizeof(2);
@@ -47,7 +47,7 @@ class MapSchemaTest {
         assertThat(schema3.isValid(data1)).isTrue();
     }
     @Test
-    public void MapSchemaShape() {
+    public void testMapSchemaShape() {
         Validator validator = new Validator();
         MapSchema mapSchema = validator.map();
 
