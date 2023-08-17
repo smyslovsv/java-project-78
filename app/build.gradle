@@ -1,8 +1,11 @@
 plugins {
     id 'java'
-    id 'application'
     id 'checkstyle'
     id 'jacoco'
+    id 'com.adarshr.test-logger' version '3.2.0'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.18'
+    id 'com.github.ben-manes.versions' version '0.47.0'
+    id 'com.github.mrsarm.jshell.plugin' version '1.2.1'
 }
 
 group = 'hexlet.code'
@@ -13,40 +16,27 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0-M1')
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.assertj:assertj-core:3.24.2'
 }
 
 test {
     useJUnitPlatform()
-}
-
-application {
-    mainClass = 'hexlet.code.App'
+    finalizedBy jacocoTestReport
 }
 
 compileJava {
     options.release = 19
-    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
 }
 
-test {
-    testLogging {
-        events "passed", "failed", "skipped"
-    }
-    finalizedBy jacocoTestReport
-}
-
-jacoco {
-    toolVersion = "0.8.9"
+testlogger {
+    theme 'mocha'
+    showStandardStreams true
 }
 
 jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
     reports {
-        xml.required = false
-        csv.required = true
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        xml.required = true
     }
 }
